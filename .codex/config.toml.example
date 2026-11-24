@@ -1,0 +1,12 @@
+# `npm run setup` writes this ignored file with the current checkout's executable path.
+# No credentials belong here.
+[mcp_servers.semantic_research]
+command = "<checkout>/target/debug/researcher-codex"
+args = ["mcp"]
+startup_timeout_sec = 15
+tool_timeout_sec = 320
+required = true
+
+[mcp_servers.semantic_research.env]
+SEMANTIC_API_URL = "http://127.0.0.1:5056"
+Q2_MCP_DEBUG = "1"

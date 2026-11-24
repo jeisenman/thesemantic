@@ -1,0 +1,23 @@
+{
+  "nodes": [
+    {
+      "id": { "namespace": "fixture://example", "name": "Synthetic input" },
+      "dataset": {},
+      "facets": { "meaning": {} }
+    },
+    {
+      "id": { "namespace": "fixture://example", "name": "Synthetic output" },
+      "dataset": {},
+      "facets": { "meaning": {} }
+    }
+  ],
+  "edges": [
+    {
+      "source": { "namespace": "fixture://example", "name": "Synthetic input" },
+      "target": { "namespace": "fixture://example", "name": "Synthetic output" },
+      "kind": "synthetic-example"
+    }
+  ],
+  "aliases": [],
+  "unresolved": ["Synthetic fixture only. This example makes no claim about actual sources, business meaning, or pipeline behavior."]
+}

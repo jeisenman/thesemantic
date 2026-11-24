@@ -1,0 +1,17 @@
+{
+  "format": "q2-lineage-contract/v1",
+  "scope": "synthetic-example",
+  "profile": "reviewed-literal-schema",
+  "repositories": [{ "name": "synthetic", "commit": "REPLACE_WITH_FULL_COMMIT" }],
+  "datasets": [{
+    "id": "Synthetic input", "major": 1, "minor": 0, "fields": [],
+    "keys": ["ExampleKey"], "partition": "",
+    "schema": {
+      "evidence": { "repository": "synthetic", "path": "schema.py", "sha256": "REPLACE_WITH_SOURCE_SHA256" },
+      "class": "SyntheticMetadata", "major": 1
+    },
+    "evidence": [{ "repository": "synthetic", "path": "schema.py", "sha256": "REPLACE_WITH_SOURCE_SHA256" }]
+  }],
+  "jobs": [],
+  "unresolved": []
+}
