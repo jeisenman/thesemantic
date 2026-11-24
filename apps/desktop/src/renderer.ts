@@ -1,4 +1,6 @@
 import './styles.css';
+import './connections.css';
+import { mountConnections } from './connections-view.js';
 import './semantic-workspace.css';
 import './codex.css';
 import './proposal-modal.css';
@@ -29,10 +31,10 @@ const main = el('main'); ledger.append(edition, masthead, nav, systems, main); a
 let records: ResearchRecord[] = []; let agents: AgentRecord[] = []; let plugins: PluginManifest[] = [];
 const requestedSession = new URLSearchParams(location.search).get('research_session');
 let selectedSession = requestedSession && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$/.test(requestedSession) ? requestedSession : undefined;
-let view: 'Research' | 'Proposals' | 'Agent Catalog' | 'Research Sessions' | 'Semantic Layer' | 'Codex' = selectedSession ? 'Research Sessions' : new URLSearchParams(location.search).get('tab') === 'codex' ? 'Codex' : 'Research';
+let view: 'Research' | 'Proposals' | 'Agent Catalog' | 'Research Sessions' | 'Semantic Layer' | 'Codex' | 'Connections' | 'Integrations' = selectedSession ? 'Research Sessions' : new URLSearchParams(location.search).get('tab') === 'codex' ? 'Codex' : 'Research';
 let order: 'newest' | 'oldest' = 'newest'; let query = ''; let disposePlugin = () => {}; let revision = 0;
-const navButtons = ['Research', 'Proposals', 'Agent Catalog', 'Research Sessions', 'Semantic Layer', 'Codex'].map(label => {
-  const b = button(label, () => { view = label as typeof view; render(); if (view !== 'Research Sessions' && view !== 'Proposals' && view !== 'Semantic Layer' && view !== 'Codex') void load(); }); nav.append(b); return b;
+const navButtons = ['Research', 'Proposals', 'Agent Catalog', 'Research Sessions', 'Semantic Layer', 'Codex', 'Connections', 'Integrations'].map(label => {
+  const b = button(label, () => { view = label as typeof view; render(); if (view !== 'Research Sessions' && view !== 'Proposals' && view !== 'Semantic Layer' && view !== 'Codex' && view !== 'Connections' && view !== 'Integrations') void load(); }); nav.append(b); return b;
 });
 function reset(): void { revision++; disposePlugin(); disposePlugin = () => {}; main.replaceChildren(); }
 function intro(kicker: string, title: string, copy: string): void {
@@ -45,6 +47,7 @@ function render(): void {
   else if (view === 'Agent Catalog') renderAgents();
   else if (view === 'Research Sessions') disposePlugin = mountSessions(main, { selectedID: selectedSession,
     onSelect: id => { selectedSession = id; }, onConnection: message => { connection.textContent = message; } });
+  else if (view === 'Connections' || view === 'Integrations') disposePlugin = mountConnections(main, view);
   else if (view === 'Codex') disposePlugin = codexView.mount(main);
   else disposePlugin=mountSemantic(main,semanticState,read,id=>{view='Research';navButtons.forEach(b=>b.classList.toggle('active',b.textContent===view));void detail(id);});
 }

@@ -1,6 +1,7 @@
 # Documentation
 
 - [Fresh checkout setup](setup.md)
+- [Local Codex plugin](plugin.md)
 - [Connections, configuration, and knowledge sources](connections.md)
 - [Source-to-lineage builder](../knowledge/README.md)
 - [Research API and MCP protocol](protocol.md)

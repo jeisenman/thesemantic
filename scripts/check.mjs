@@ -14,6 +14,7 @@ if (format.stdout.trim()) {
 mkdirSync(new URL('../target/', import.meta.url), {recursive: true});
 const checks = [
   ['npm', ['run', 'test:setup']],
+  ['npm', ['run', 'test:plugin']],
   ['go', ['vet', './knowledge/...', './tools/...']],
   ['go', ['test', './knowledge/...', './tools/...']],
   ['go', ['build', '-o', 'target/semantic-lineage-build', './tools/lineagebuild']],

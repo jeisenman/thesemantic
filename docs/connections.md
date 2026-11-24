@@ -9,6 +9,22 @@ Use `npm run api`, `npm run desktop`, and `npm run researcher` to load the local
 Electron, or Rust commands use their exported process environment instead.
 Credentials belong in the local environment or the provider's own login store.
 
+## Desktop screens
+
+Open **Connections** for setup guidance, readiness, check scope, and the last
+refresh time. Open **Integrations** for the endpoint and transport inventory.
+Search and status filters apply to the current snapshot. Refresh performs one
+bounded host read; it does not start providers or run a model.
+
+The API health check verifies access to its configured MLflow experiment.
+Local source checks inspect filesystem metadata only. Native Codex login,
+client plugin installation, model access, source contents, and graph freshness
+remain explicitly unchecked on these screens. Endpoint displays contain only
+credential-free origins. Host-local paths and request details stay hidden.
+These screens do not edit settings or reveal credentials.
+
+Install the MCP and research skill through the [local Codex plugin](plugin.md).
+
 ## Connection map
 
 | Component | Connection | Ownership and behavior |

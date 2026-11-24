@@ -66,3 +66,11 @@ authorization. Keep its rubric and source notes with the definition.
 
 See docs/protocol.md for the shared producer/consumer contract. Root owns this
 contract and coordinates changes. Each worker owns only its assigned directories.
+
+The local Codex plugin source is `plugins/semantic/`. `npm run plugin:prepare`
+creates a generated marketplace under ignored `var/`, containing only public
+plugin assets and nonsecret application-root/API-origin settings. Never package
+`.env`, native authentication, saved research, or generated dependency trees.
+The plugin launches the installed app's stdio MCP; it is not an HTTP MCP server.
+See `docs/plugin.md` for installation and verification. Desktop Connections and
+Integrations use finite host reads; they do not edit settings or run providers.

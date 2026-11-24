@@ -1,5 +1,6 @@
 import { ChatActivitySchema, ChatListSchema, ChatRecordSchema, ChatRequestSchema } from '../../../packages/runtime/src/chats.js';
 import { z } from 'zod';
+import { ConnectionReadSchema, ConnectionListSchema } from './connection-contracts.js';
 import { DocumentIdentitySchema, DocumentSchema, DocumentSaveSchema, DocumentHistorySchema } from '../../../packages/runtime/src/documents.js';
 import { AgentRecordSchema, PluginManifestSchema, ResearchRecordSchema } from '../../../packages/runtime/src/contracts.js';
 import { ProposalInputSchema, ProposalRecordSchema, ProposalListSchema } from '../../../packages/runtime/src/proposals.js';
@@ -7,6 +8,7 @@ import { SessionSummarySchema, SessionRecordSchema } from '../../../packages/run
 import { NodeIDSchema, LineageGraphSchema, ExplanationSchema, nodePath } from './lineage-contracts.js';
 import { HelpRequestSchema, KnowledgeRequestSchema, knowledgePath, HelpArticleSchema, HelpListSchema, helpPath } from './help-contracts.js';
 export const ReadSchema = z.discriminatedUnion('operation', [
+  ConnectionReadSchema,
   z.object({operation:z.literal('chats.activity'),id:z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$/),key:z.uuid()}).strict(),
   z.object({operation:z.literal('chats.list'),order:z.enum(['newest','oldest'])}).strict(),
   z.object({operation:z.literal('chats.get'),id:z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$/)}).strict(),
@@ -30,6 +32,7 @@ export type Operation = ReadRequest['operation'];
 export function route(raw: unknown): string {
   const r = ReadSchema.parse(raw);
   switch (r.operation) {
+    case 'connections.list': return '/connections';
     case 'chats.activity': return `/api/research/v1/chats/${encodeURIComponent(r.id)}/activity?key=${encodeURIComponent(r.key)}`;
     case 'chats.list': return `/api/research/v1/chats?order=${r.order}`;
     case 'chats.get': return `/api/research/v1/chats/${encodeURIComponent(r.id)}`;
@@ -51,6 +54,7 @@ export function route(raw: unknown): string {
 /** Validates all service evidence before it enters the renderer. */
 export function validateResponse(operation: Operation, value: unknown): unknown {
   switch (operation) {
+    case 'connections.list': return ConnectionListSchema.parse(value);
     case 'chats.activity': return ChatActivitySchema.parse(value);
     case 'chats.list': return ChatListSchema.parse(value);
     case 'chats.get': return ChatRecordSchema.parse(value);

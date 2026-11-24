@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "semantic",
+  "version": "0.1.0",
+  "description": "Local research tools from The Semantic.",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "The Semantic"
+      }
+    }
+  }
+}

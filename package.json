@@ -14,6 +14,8 @@
     "test": "npm run test --workspaces --if-present",
     "check": "npm run check --workspaces --if-present",
     "test:setup": "node --test scripts/setup.test.mjs scripts/start.test.mjs",
+    "plugin:prepare": "node scripts/plugin.mjs",
+    "test:plugin": "node --test scripts/plugin.test.mjs",
     "api": "node scripts/start.mjs api",
     "desktop": "node scripts/start.mjs desktop",
     "researcher": "node scripts/start.mjs researcher",

@@ -98,6 +98,15 @@ See [session protocol](docs/session-protocol.md) and
 
 ## Configuration
 
+The desktop **Connections** screen shows setup guidance and a bounded readiness
+snapshot. **Integrations** shows service origins, transports, check scope, and
+timestamps, with search and status filters. Local source checks read metadata
+only; authentication and source freshness remain explicit unknowns. Neither
+screen edits credentials. See [connections](docs/connections.md).
+
+For Codex, prepare and install the [local Semantic plugin](docs/plugin.md). It
+packages the existing research skill and stdio MCP connection for this checkout.
+
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | SEMANTIC_API_URL | http://127.0.0.1:5056 | App API; loopback only |

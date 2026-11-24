@@ -105,3 +105,18 @@ Message-style sidebar rows use topic initials and saved UTC dates. Previews come
 only from chat records already loaded in this view; unopened records show saved
 message counts. Refresh clears cached previews. No background history fetches
 or fabricated snippets support this styling.
+
+Connections and Integrations share `connections-view.ts` and the strict finite
+`connections.list` read contract. Main owns `connections-host.ts`; preload checks
+requests and responses. The explicit Vite preview uses the same host reader.
+One manual refresh reads API health once and configured local filesystem metadata.
+The API health read verifies MLflow access; no separate storage query is made.
+Only sanitized credential-free HTTP origins enter the renderer. Paths, query
+strings, fragments, credentials, arbitrary environment values, raw health data,
+and internal evidence metadata never enter this contract. Local snapshot checks
+prove file/directory metadata only, not contents or freshness. An invalid selected
+lineage snapshot cannot fall back to HTTP. Native Codex and Semantic MCP describe
+stdio transport with authentication, installation and process checks explicitly
+unverified. There is no credential editor, model call, background check or retry.
+Disposal blocks late reads. `tests/connections-native.cjs` checks actual preload
+routing and captures both screens with synthetic data under ignored `var/qa/`.

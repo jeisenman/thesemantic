@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { readConnections } from './src/connections-host.js';
 import { lineageRequestFromPath } from './src/lineage-client.js';
 import { readConfiguredLineage } from './src/lineage-snapshot.js';
 import { readKnowledgeSnapshot } from './src/knowledge-snapshot.js';
@@ -27,6 +28,13 @@ export default defineConfig({
     { name: 'preview-style-csp', apply: 'serve', transformIndexHtml: html => html.replace("style-src 'self'", "style-src 'self' 'unsafe-inline'") },
     { name: 'production-csp', apply: 'build', transformIndexHtml: html => html.replace("connect-src 'self'", "connect-src 'none'") },
     { name: 'finite-preview-reads', configureServer(server) {
+      server.middlewares.use('/preview-connections', async (request,response) => {
+        try {
+          if(request.method!=='GET'||!['','/'].includes(request.url??''))throw new Error('Unsupported connection read.');
+          const data=await readConnections({operation:'connections.list'});
+          response.setHeader('Content-Type','application/json');response.end(JSON.stringify(data));
+        } catch {response.statusCode=503;response.end('Connection metadata unavailable or request unsupported.');}
+      });
       server.middlewares.use('/preview-lineage', async (request,response) => {
         try {
           if(request.method!=='GET')throw new Error('Read-only operation.');

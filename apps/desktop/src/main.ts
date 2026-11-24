@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain, session, net, shell } from 'electron';
 import path from 'node:path';
+import { readConnections } from './connections-host.js';
 import { ReadSchema, readAPI, chatAPI, saveProposalAPI, saveDocumentAPI } from './api.js';
 import { researchSessionArgument, forwardedResearchSession } from './launch.js';
 
@@ -35,6 +36,7 @@ function createWindow(): void {
   ipcMain.handle('semantic:read', async (event, request: unknown) => {
     if (event.sender !== win.webContents || event.senderFrame !== win.webContents.mainFrame) throw new Error('Untrusted IPC sender.');
     const validated=ReadSchema.parse(request);
+    if(validated.operation==='connections.list')return readConnections(validated,undefined,net.fetch);
     if(validated.operation==='lineage.graph'||validated.operation==='lineage.node')return readConfiguredLineage(validated,undefined,net.fetch);
     if(validated.operation==='knowledge.list'||validated.operation==='knowledge.search'||validated.operation==='knowledge.article')return readKnowledgeSnapshot(validated);
     if(validated.operation==='help.list'||validated.operation==='help.search'||validated.operation==='help.article')return readHelpCenter(validated,net.fetch);
